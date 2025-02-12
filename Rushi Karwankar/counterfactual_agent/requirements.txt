@@ -1,0 +1,4 @@
+numpy>=1.21.0
+requests>=2.26.0
+rich>=10.12.0
+tenacity>=8.0.1
