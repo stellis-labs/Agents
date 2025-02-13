@@ -50,5 +50,5 @@ class CounterfactualReasoningSystem:
 
 if __name__ == "__main__":
     system = CounterfactualReasoningSystem()
-    problem_statement = "What strategies can be implemented to increase employee productivity in a hybrid work environment?"
+    problem_statement = "How to optimize the supply chain to reduce costs and improve efficiency?"
     system.solve(problem_statement)
