@@ -1,0 +1,50 @@
+flowchart TD
+    subgraph UI["Console Interface"]
+        CLI["Rich CLI Interface"]
+        LOG["Logging System"]
+    end
+
+    subgraph Core["Core System"]
+        TR["Triage Engine"]
+        RAG["RAG Orchestrator"]
+        Cache["Response Cache"]
+    end
+
+    subgraph KB["Knowledge Management"]
+        KBS["Knowledge Base Store\n(SQLite/JSON)"]
+        RS["Retrieval System"]
+        Index["Search Index"]
+    end
+
+    subgraph ML["ML Pipeline"]
+        OL["Ollama Service"]
+        Model["Medical NLP Model\n(BioGPT/ClinicalBERT)"]
+        PP["Preprocessing Pipeline"]
+    end
+
+    %% Data flow connections
+    CLI -->|"Patient Report"| TR
+    TR -->|"Process Request"| RAG
+    RAG -->|"Query Context"| RS
+    RS -->|"Search"| Index
+    Index -->|"Access"| KBS
+    KBS -->|"Medical Guidelines"| RS
+    RS -->|"Relevant Context"| RAG
+    RAG -->|"Enriched Query"| OL
+    OL -->|"Inference Request"| Model
+    Model -->|"Triage Results"| RAG
+    RAG -->|"Store Results"| Cache
+    RAG -->|"Final Output"| TR
+    TR -->|"Formatted Response"| CLI
+    CLI -->|"System Events"| LOG
+
+    %% Styling
+    classDef primary fill:#2374ab,stroke:#2374ab,color:#fff
+    classDef secondary fill:#047495,stroke:#047495,color:#fff
+    classDef storage fill:#499167,stroke:#499167,color:#fff
+    classDef ml fill:#8b5e83,stroke:#8b5e83,color:#fff
+
+    class CLI,TR,RAG,Cache primary
+    class KBS,RS,Index secondary
+    class Model,OL,PP ml
+    class LOG storage

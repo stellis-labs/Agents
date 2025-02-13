@@ -1,0 +1,3 @@
+patient_triage/.env
+.venv/
+./__pycache__/

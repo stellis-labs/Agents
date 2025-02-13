@@ -1,0 +1,53 @@
+graph TB
+    subgraph UI["Console Interface Layer"]
+        CLI["Console UI"]
+        INPUT["Input Handler"]
+        OUTPUT["Output Formatter"]
+    end
+
+    subgraph CORE["Core Processing Layer"]
+        PARSER["Patient Report Parser"]
+        TRIAGE["Triage Engine"]
+        VAL["Input Validator"]
+    end
+
+    subgraph RAG["RAG System"]
+        RET["Retrieval Engine"]
+        GEN["Generation Engine"]
+        PROMPT["Prompt Manager"]
+    end
+
+    subgraph MODEL["Model Layer"]
+        OLLAMA["Ollama Server"]
+        MEDMODEL["Medical LLM Model"]
+    end
+
+    subgraph DATA["Data Layer"]
+        VDB["Vector Database"]
+        KB["Medical Knowledge Base"]
+        LOGS["Logging System"]
+    end
+
+    %% Connections
+    CLI --> INPUT
+    INPUT --> PARSER
+    PARSER --> VAL
+    VAL --> TRIAGE
+    
+    TRIAGE --> RET
+    RET --> VDB
+    VDB --> KB
+    
+    RET --> PROMPT
+    PROMPT --> GEN
+    GEN --> OLLAMA
+    OLLAMA --> MEDMODEL
+    
+    GEN --> OUTPUT
+    OUTPUT --> CLI
+    
+    %% Logging connections
+    PARSER --> LOGS
+    TRIAGE --> LOGS
+    RET --> LOGS
+    GEN --> LOGS

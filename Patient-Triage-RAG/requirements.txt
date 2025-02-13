@@ -1,0 +1,12 @@
+chromadb
+fastapi
+groq
+httpx
+huggingface-hub
+python-dotenv
+python-multipart
+requests
+rich
+sentence-transformers
+uvicorn
+slowapi
