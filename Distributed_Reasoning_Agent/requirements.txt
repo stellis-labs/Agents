@@ -1,0 +1,4 @@
+langchain
+langchain_groq
+python-dotenv
+rich
