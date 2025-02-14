@@ -3,8 +3,8 @@ import time
 import json
 import requests
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
-from config import LLM_API_URL, COST_THRESHOLD, TIME_LIMIT
-from logger import log
+from src.config import LLM_API_URL, COST_THRESHOLD, TIME_LIMIT
+from src.logger import log
 
 api_call_count = 0
 start_time = time.time()

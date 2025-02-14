@@ -241,6 +241,26 @@ for problem in problems:
     system.solve(problem)
 ```
 
+## 🎯 System Design
+
+![System Design](./counterfactual_agent/images/Low_Level_Design.JPG)
+
+## 📊 Data Flow Diagram
+
+![Data Flow Diagram](./counterfactual_agent/images/Data_Flow_Diagram.JPG)
+
+## 🖥️ Generated Output
+
+### Key Components
+
+![Key Components Output1](./counterfactual_agent/images/output1.JPG)
+![Key Components Output2](./counterfactual_agent/images/output2.JPG)
+
+### "What if" Hypothesis and Final Recommendations
+
+![Hyposthesis Output1](./counterfactual_agent/images/output3.JPG)
+![Hyposthesis Output2](./counterfactual_agent/images/output4.JPG)
+
 ## 📋 Dependencies
 
 Detailed requirements with purpose:

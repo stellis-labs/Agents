@@ -1,0 +1,7 @@
+chromadb
+rich
+ollama
+faker 
+pandas 
+fuzzywuzzy
+python-dotenv

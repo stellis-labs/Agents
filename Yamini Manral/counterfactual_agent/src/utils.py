@@ -1,6 +1,6 @@
 # utils.py
 import json
-from logger import log
+from src.logger import log
 
 def validate_json(chunk):
     """Validate if the chunk is a valid JSON object."""
@@ -16,13 +16,18 @@ def validate_json(chunk):
 def stream_response(response):
     """Stream the response from the LLM API."""
     full_response = ""
+    
+    # Iterate through the chunks and accumulate the response
     for chunk in response.iter_lines():
         if chunk:
             try:
-                chunk_data = validate_json(chunk)
+                chunk_data = validate_json(chunk)  # Validate each chunk
                 chunk_content = chunk_data.get("response", "")
-                full_response += chunk_content
+                full_response += chunk_content  # Accumulate content in full_response
             except (json.JSONDecodeError, KeyError):
                 log("Retrying due to invalid JSON response...", style="bold yellow")
-                raise
+                continue  # Skip invalid chunks and continue processing
     return full_response
+
+
+
