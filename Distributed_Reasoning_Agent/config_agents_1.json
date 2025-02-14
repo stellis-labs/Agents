@@ -1,0 +1,27 @@
+[
+  {
+    "name": "PatientHistoryAnalyzer",
+    "task_type": "Gather patient's medical history and symptoms",
+    "task_prompt": "Review patient's medical records, including previous diagnoses and treatments. Ask questions to clarify the timing and severity of symptoms such as persistent fatigue, joint pain, and photosensitivity."
+  },
+  {
+    "name": "LabResultAnalyzer",
+    "task_type": "Analyze laboratory test results",
+    "task_prompt": "Review ANA, anemia, and ESR lab results in detail. Identify any abnormal or concerning values that may indicate a specific autoimmune condition, such as lupus."
+  },
+  {
+    "name": "DiseaseProbabilityEstimator",
+    "task_type": "Estimate the probability of different autoimmune conditions",
+    "task_prompt": "Using available information, estimate the likelihood of systemic lupus erythematosus (SLE) or other autoimmune conditions based on patient characteristics, lab results, and family history. Rank potential diagnoses by probability."
+  },
+  {
+    "name": "TreatmentOptionGenerator",
+    "task_type": "Generate treatment options for possible diagnoses",
+    "task_prompt": "Research and generate a list of potential treatments for the top-ranked diagnoses. Consider factors such as medication side effects, patient comorbidities, and current medical guidelines."
+  },
+  {
+    "name": "TreatmentRecommendationGenerator",
+    "task_type": "Generate treatment recommendations based on diagnosis and options",
+    "task_prompt": "Based on the diagnosed condition(s) and available treatment options, generate a set of personalized treatment recommendations for the patient. Consider factors such as patient preferences, lifestyle, and potential complications."
+  }
+]

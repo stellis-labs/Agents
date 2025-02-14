@@ -13,19 +13,21 @@ A powerful **Counterfactual Reasoning Agent** that explores **"what-if" scenario
 
 ## 🏗️ Project Structure  
 ```
-counterfactual_agent/
-│── img/                # contains images for the repo
-│── src/
-    │── config.py           # Configuration settings
-    │── agent.py            # Core class implementation
-    │── logger.py           # Logging and markdown rendering utilities
-    │── llm_api.py          # LLM API calling logic
-    │── scenario.py         # Scenario generation and evaluation logic
-    │── utils.py            # Utility functions like JSON validation
-    │── conversation.py     # Used for session creation
-│── main.py             # Main entry point to run the agent
-│── requirements.txt    # Dependencies 
-│── README.md           # Project documentation
+Yamini Manral/
+    counterfactual_agent/
+    │── img/                    # Contains images for the project
+    │── src/
+        │── config.py           # Configuration settings
+        │── agent.py            # Core class implementation
+        │── logger.py           # Logging and markdown rendering utilities
+        │── llm_api.py          # LLM API calling logic
+        │── scenario.py         # Scenario generation and evaluation logic
+        │── utils.py            # Utility functions like JSON validation
+        │── conversation.py     # Used for session creation
+    │── main.py                 # Main entry point to run the agent
+    │── requirements.txt        # Dependencies 
+│── README.md                   # Project documentation
+│── LICENSE.txt                 # Project License - MIT License
 ```
 
 ---
@@ -33,11 +35,11 @@ counterfactual_agent/
 ## System Design
 ### High Level Architecture
 
-![high level architecture](./img/High-level%20Architecture.png)
+![high level architecture](./counterfactual_agent/img/High-level%20Architecture.png)
 
 ### Low-level System Design
 
-![medium level system design](./img/medium-level.png)
+![medium level system design](./counterfactual_agent/img/medium-level.png)
 
 ---
 
@@ -45,7 +47,7 @@ counterfactual_agent/
 
 ### 1️⃣ Clone the Repository  
 ```sh
-git clone https://github.com/yaminimanral/StellisLabs-Agents.git
+git clone https://github.com/your-username/StellisLabs-Agents.git
 cd Yamini Manral/counterfactual_agent
 ```
 
@@ -104,14 +106,14 @@ tenacity
 ## 💡 Output 
 
 ### Example 1:
-![image 1](./img/coffee1.png)
-![image 2](./img/coffee2.png)
+![image 1](./counterfactual_agent/img/coffee1.png)
+![image 2](./counterfactual_agent/img/coffee2.png)
 
 ### Example 2:
-![image 3](./img/healthcare.png)
+![image 3](./counterfactual_agent/img/healthcare.png)
 
 ### Example 3:
-![image 4](./img/chocolate.png)
+![image 4](./counterfactual_agent/img/chocolate.png)
 
 
 ---
@@ -123,7 +125,7 @@ tenacity
 
 ## ✍🏻 Author
 🔸 Developed by **Yamini Manral**  
-🔸 For queries, contact: **manral.y@northeastern.edu**  
+🔸 For queries: **manral.y@northeastern.edu**  
  
 ---
 
