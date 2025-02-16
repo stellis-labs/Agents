@@ -1,4 +1,3 @@
-
 # Enhanced Multi-Hop Reasoning Agent
 
 ## Overview
@@ -94,4 +93,4 @@ MIT License
 
 ## Author
 
-Developed by **[Your Name]**
+Developed by Mayur Kishor Kumar
