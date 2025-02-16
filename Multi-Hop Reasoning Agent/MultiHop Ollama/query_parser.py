@@ -1,5 +1,4 @@
 import requests
-import re
 
 class QueryParser:
     """Parses user queries using LLM to extract actionable tasks"""
