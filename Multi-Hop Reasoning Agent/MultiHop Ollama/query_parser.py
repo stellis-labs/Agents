@@ -2,36 +2,32 @@ import requests
 import re
 
 class QueryParser:
-    """Parses user queries using Ollama API"""
-
-    def __init__(self, config):
-        self.api_url = config.get_api_url()
+    """Parses user queries using LLM to extract actionable tasks"""
+    
+    def __init__(self):
+        self.base_url = "http://localhost:11434/api/chat"
 
     def parse(self, query):
         """Extracts key analysis targets from user query"""
-        prompt = f"""Extract the key factors or entities that need to be analyzed from the following user query.
-        Return only the key terms in a comma-separated format with no additional text.
+        prompt = f"""Analyze the following user query and identify the key factors or entities that need to be analyzed. 
+        Return your response as a comma-separated list of terms, each term being a noun or noun phrase. 
+        Do not include any additional text.
 
         Query: {query}
         Response:"""
-
+        
         response = requests.post(
-            self.api_url,
+            self.base_url,
             json={
                 "model": "tinyllama",
-                "prompt": prompt,
-                "system": "You are a helpful assistant that extracts key analysis targets from user queries.",
+                "messages": [
+                    {"role": "system", "content": "You are a helpful assistant that extracts key analysis targets from user queries."},
+                    {"role": "user", "content": prompt}
+                ],
                 "stream": False
             }
         )
-
-        response_text = response.json()["response"]
-
-        # Extract only terms using regex (removes numbers, special characters, etc.)
-        extracted_terms = re.findall(r'\b[A-Za-z0-9-]+\b', response_text)
-
-        # Remove common stop words if necessary (optional)
-        stop_words = {"the", "in", "a", "an", "of", "to", "on", "by", "for", "with", "and", "or"}
-        cleaned_terms = [term for term in extracted_terms if term.lower() not in stop_words]
-
-        return [f"Analyze {term.strip()}" for term in cleaned_terms]
+        
+        response_text = response.json()["message"]["content"]
+        tasks = [f"Analyze {term.strip()}" for term in response_text.split(",") if term.strip()]
+        return tasks
