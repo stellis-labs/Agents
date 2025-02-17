@@ -40,33 +40,35 @@ The system is organized into several key modules:
 
 ## Architecture Diagram
 
-# Dynamic ACO Route Human-Friendly Directions System
+# ACO Route Human-Friendly Directions System
 
 ## Running the Code
 
 ### File Structure
 
-dynamic_aco_routing_system/
+```
+aco_routing_system/
 │
-├──·aco_agents/
-│···├──·__init__.py
-│···├──·explorer.py··········# Explorer agent class
-│···├──·trailblazer.py·······# Trailblazer agent class
-│···├──·exploiter.py·········# Exploiter agent class
-│···└──·helper_agents.py·····# TaskManager, PerformanceMonitor, FeedbackLoop, PheromoneRegulator
+├── aco_agents/
+│   ├── __init__.py
+│   ├── explorer.py          # Explorer agent class
+│   ├── trailblazer.py       # Trailblazer agent class
+│   ├── exploiter.py         # Exploiter agent class
+│   └── helper_agents.py     # TaskManager, PerformanceMonitor, FeedbackLoop, PheromoneRegulator
 │
-├──·utils/
-│···├──·__init__.py
-│···├──·geocoding.py·········# geocode_location(), get_graph_for_route()
-│···└──·directions.py········# generate_directions()
+├── utils/
+│   ├── __init__.py
+│   ├── geocoding.py         # geocode_location(), get_graph_for_route()
+│   └── directions.py        # generate_directions()
 │
-├──·llm/
-│···├──·__init__.py
-│···└──·llm_interface.py·····# HuggingFaceLLMInterface, LLMInterface, simulate_ACO()
+├── llm/
+│   ├── __init__.py
+│   └── llm_interface.py     # HuggingFaceLLMInterface, LLMInterface, simulate_ACO()
 │
-├──·main.py················# Application entry point
-├──·requirements.txt········# Python dependencies
-└──·README.md··············# Documentation
+├── main.py                  # Application entry point
+├── requirements.txt         # Python dependencies
+└── README.md               # Documentation
+```
 
 
 ### Ensure Your Environment Variable is Set:
@@ -76,7 +78,7 @@ Make sure the `HF_API_TOKEN` environment variable is set as described above.
 ### Run the Script:
 
 ```bash
-python aco_route_.py
+python main.py
 ```
 
 ### Enter Your Query:
