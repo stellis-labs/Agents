@@ -1,74 +1,4 @@
-# Dynamic ACO Route Human-Friendly Directions System
-
-## Running the Code
-
-### Ensure Your Environment Variable is Set:
-
-Make sure the `HF_API_TOKEN` environment variable is set as described above.
-
-### Run the Script:
-
-```bash
-python dynamic_aco_route_human.py
-```
-
-### Enter Your Query:
-
-When prompted, input a free-form query. For example:
-
-```vbnet
-Enter your query (for example, 'give me the shortest path from Boston Logan Airport to Northeastern University'):
-> give me the shortest path from Boston Logan Airport to Northeastern University
-```
-
-### View the Output:
-
-The system will process your query, compute the route using ACO, generate human-friendly turn-by-turn directions, and display the final output on the console.
-
----
-
-## Code Structure
-
-### Geocoding & Graph Construction:
-
-- `geocode_location(location)`: Converts a location string to geographic coordinates.
-- `get_graph_for_route(start_coords, dest_coords)`: Downloads the road network graph using OSMnx.
-
-### ACO Worker Agents:
-
-- **Explorer**: Generates candidate routes via random walks.
-- **Trailblazer**: Evaluates routes and deposits pheromones.
-- **Exploiter**: Refines candidate routes using a 2-opt algorithm.
-
-### Helper Agents:
-
-- `TaskManager`, `PerformanceMonitor`, `FeedbackLoop`, and `PheromoneRegulator` manage the simulation.
-
-### Directions Generation:
-
-- `generate_directions(graph, route)`: Converts the route (node IDs) into human-friendly directions with street names and distances.
-
-### LLM Integration:
-
-- **HuggingFaceLLMInterface**: Interfaces with the Hugging Face API for both query parsing and final output formatting.
-- **LLMInterface**: Combines the components to process the query and generate the final directions.
-
-### Main Script:
-
-- `main()`: The entry point for the application.
-
----
-
-## Future Enhancements
-
-- Improve LLM parsing accuracy by using advanced or instruction-tuned models.
-- Enhance route evaluation with live traffic data.
-- Integrate visualization tools to display the route on a map.
-- Develop a web-based interface for broader accessibility.
-
----
-
-# Dynamic ACO Routing System with LLM Integration
+# Ant Colony Optimization (ACO) Agent with LLM Integration
 
 This repository contains a dynamic, city‑agnostic routing system that uses free map data and an Ant Colony Optimization (ACO) algorithm to compute turn‑by‑turn directions. The system integrates with the Hugging Face LLM API to both parse free‑form queries and format human‑friendly directions. You can input a query like:
 
@@ -109,6 +39,76 @@ The system is organized into several key modules:
 ---
 
 ## Architecture Diagram
+
+# Dynamic ACO Route Human-Friendly Directions System
+
+## Running the Code
+
+### Ensure Your Environment Variable is Set:
+
+Make sure the `HF_API_TOKEN` environment variable is set as described above.
+
+### Run the Script:
+
+```bash
+python aco_route_.py
+```
+
+### Enter Your Query:
+
+When prompted, input a free-form query. For example:
+
+```vbnet
+Enter your query (for example, 'give me the shortest path from Boston Logan Airport to Northeastern University'):
+> give me the shortest path from Boston Logan Airport to Northeastern University
+```
+
+### View the Output:
+
+The system will process your query, compute the route using ACO, generate human-friendly turn-by-turn directions, and display the final output on the console.
+
+---
+
+## Code Structure
+
+### Geocoding & Graph Construction:
+
+- `geocode_location(location)`: Converts a location string to geographic coordinates.
+- `get_graph_for_route(start_coords, dest_coords)`: Downloads the road network graph using OSMnx.
+
+### ACO Worker Agents:
+
+- **`Explorer`**: Generates candidate routes via random walks.
+- **`Trailblazer`**: Evaluates routes and deposits pheromones.
+- **`Exploiter`**: Refines candidate routes using a 2-opt algorithm.
+
+### Helper Agents:
+
+- `TaskManager`, `PerformanceMonitor`, `FeedbackLoop`, and `PheromoneRegulator` manage the simulation.
+
+### Directions Generation:
+
+- `generate_directions(graph, route)`: Converts the route (node IDs) into human-friendly directions with street names and distances.
+
+### LLM Integration:
+
+- **`HuggingFaceLLMInterface`**: Interfaces with the Hugging Face API for both query parsing and final output formatting.
+- **`LLMInterface`**: Combines the components to process the query and generate the final directions.
+
+### Main Script:
+
+- `main()`: The entry point for the application.
+
+---
+
+## Future Enhancements
+
+- Improve LLM parsing accuracy by using advanced or instruction-tuned models.
+- Enhance route evaluation with live traffic data.
+- Integrate visualization tools to display the route on a map.
+- Develop a web-based interface for broader accessibility.
+
+---
 
 
 
