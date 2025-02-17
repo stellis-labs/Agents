@@ -40,6 +40,8 @@ The system is organized into several key modules:
 
 ## Architecture Diagram
 
+![ACO_Architecture_Diagram](images/architecture_diagram.png.png)
+
 # ACO Route Human-Friendly Directions System
 
 ## Running the Code
