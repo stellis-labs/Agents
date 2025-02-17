@@ -12,28 +12,28 @@ and receive a detailed, step‑by‑step route recommendation that includes stre
 
 The system is organized into several key modules:
 
-1. **Query Processing & Extraction:**  
+1. **`Query Processing & Extraction`:**  
    Uses an LLM (via the Hugging Face API) to extract the start and destination locations from a free‑form query.
 
-2. **Geocoding:**  
+2. **`Geocoding`:**  
    Converts the extracted location names into geographic coordinates using Nominatim (via Geopy).
 
-3. **Map Data Retrieval & Graph Construction:**  
+3. **`Map Data Retrieval & Graph Construction`:**  
    Downloads a road network covering the area between the start and destination using OSMnx.
 
-4. **Graph Mapping:**  
+4. **`Graph Mapping`:**  
    Maps the geocoded coordinates to the nearest nodes in the road network graph.
 
-5. **ACO Routing Module:**  
+5. **`ACO Routing Module`:**  
    Uses an Ant Colony Optimization (ACO) approach with multiple worker agents (Explorer, Trailblazer, Exploiter) and helper agents (Task Manager, Performance Monitor, Feedback Loop, Pheromone Regulator) to compute candidate routes and refine them.
 
-6. **Directions Generation:**  
+6. **`Directions Generation`:**  
    Converts the best route (a list of node IDs) into human-friendly turn‑by‑turn directions by extracting street names and distances from the graph.
 
-7. **LLM Formatting:**  
+7. **`LLM Formatting`:**  
    The final route details are sent to the LLM API to produce polished, natural language directions.
 
-8. **User Output:**  
+8. **`User Output`:**  
    The formatted, human‑friendly directions are displayed in the command line.
 
 ---
