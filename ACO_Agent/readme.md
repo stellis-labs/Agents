@@ -1,0 +1,120 @@
+# Dynamic ACO Route Human-Friendly Directions System
+
+## Running the Code
+
+### Ensure Your Environment Variable is Set:
+
+Make sure the `HF_API_TOKEN` environment variable is set as described above.
+
+### Run the Script:
+
+```bash
+python dynamic_aco_route_human.py
+```
+
+### Enter Your Query:
+
+When prompted, input a free-form query. For example:
+
+```vbnet
+Enter your query (for example, 'give me the shortest path from Boston Logan Airport to Northeastern University'):
+> give me the shortest path from Boston Logan Airport to Northeastern University
+```
+
+### View the Output:
+
+The system will process your query, compute the route using ACO, generate human-friendly turn-by-turn directions, and display the final output on the console.
+
+---
+
+## Code Structure
+
+### Geocoding & Graph Construction:
+
+- `geocode_location(location)`: Converts a location string to geographic coordinates.
+- `get_graph_for_route(start_coords, dest_coords)`: Downloads the road network graph using OSMnx.
+
+### ACO Worker Agents:
+
+- **Explorer**: Generates candidate routes via random walks.
+- **Trailblazer**: Evaluates routes and deposits pheromones.
+- **Exploiter**: Refines candidate routes using a 2-opt algorithm.
+
+### Helper Agents:
+
+- `TaskManager`, `PerformanceMonitor`, `FeedbackLoop`, and `PheromoneRegulator` manage the simulation.
+
+### Directions Generation:
+
+- `generate_directions(graph, route)`: Converts the route (node IDs) into human-friendly directions with street names and distances.
+
+### LLM Integration:
+
+- **HuggingFaceLLMInterface**: Interfaces with the Hugging Face API for both query parsing and final output formatting.
+- **LLMInterface**: Combines the components to process the query and generate the final directions.
+
+### Main Script:
+
+- `main()`: The entry point for the application.
+
+---
+
+## Future Enhancements
+
+- Improve LLM parsing accuracy by using advanced or instruction-tuned models.
+- Enhance route evaluation with live traffic data.
+- Integrate visualization tools to display the route on a map.
+- Develop a web-based interface for broader accessibility.
+
+---
+
+# Dynamic ACO Routing System with LLM Integration
+
+This repository contains a dynamic, city‑agnostic routing system that uses free map data and an Ant Colony Optimization (ACO) algorithm to compute turn‑by‑turn directions. The system integrates with the Hugging Face LLM API to both parse free‑form queries and format human‑friendly directions. You can input a query like:
+
+> "give me the shortest path from Boston Logan Airport to Northeastern University"
+
+and receive a detailed, step‑by‑step route recommendation that includes street names and distances.
+
+---
+
+## System Overview
+
+The system is organized into several key modules:
+
+1. **Query Processing & Extraction:**  
+   Uses an LLM (via the Hugging Face API) to extract the start and destination locations from a free‑form query.
+
+2. **Geocoding:**  
+   Converts the extracted location names into geographic coordinates using Nominatim (via Geopy).
+
+3. **Map Data Retrieval & Graph Construction:**  
+   Downloads a road network covering the area between the start and destination using OSMnx.
+
+4. **Graph Mapping:**  
+   Maps the geocoded coordinates to the nearest nodes in the road network graph.
+
+5. **ACO Routing Module:**  
+   Uses an Ant Colony Optimization (ACO) approach with multiple worker agents (Explorer, Trailblazer, Exploiter) and helper agents (Task Manager, Performance Monitor, Feedback Loop, Pheromone Regulator) to compute candidate routes and refine them.
+
+6. **Directions Generation:**  
+   Converts the best route (a list of node IDs) into human-friendly turn‑by‑turn directions by extracting street names and distances from the graph.
+
+7. **LLM Formatting:**  
+   The final route details are sent to the LLM API to produce polished, natural language directions.
+
+8. **User Output:**  
+   The formatted, human‑friendly directions are displayed in the command line.
+
+---
+
+## Architecture Diagram
+
+
+
+## License
+
+This project is open source and available under the MIT License.
+
+Feel free to modify and extend the code or documentation as needed.
+
