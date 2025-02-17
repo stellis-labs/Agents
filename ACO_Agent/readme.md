@@ -99,32 +99,37 @@ The system will process your query, compute the route using ACO, generate human-
 ## Code Structure
 
 ### Geocoding & Graph Construction:
-
-- `geocode_location(location)`: Converts a location string to geographic coordinates.
-- `get_graph_for_route(start_coords, dest_coords)`: Downloads the road network graph using OSMnx.
+- **`geocode_location(location)` (`geocoding.py`)**: Converts a location string to geographic coordinates.
+- **`get_graph_for_route(start_coords, dest_coords)` (`geocoding.py`)**: Downloads the road network graph using OSMnx based on the start and destination coordinates.
 
 ### ACO Worker Agents:
-
-- **`Explorer`**: Generates candidate routes via random walks.
-- **`Trailblazer`**: Evaluates routes and deposits pheromones.
-- **`Exploiter`**: Refines candidate routes using a 2-opt algorithm.
+- **Explorer (`explorer.py`)**: Generates candidate routes via random walks through the graph.
+- **Trailblazer (`trailblazer.py`)**: Evaluates the generated routes and deposits pheromones on the promising paths.
+- **Exploiter (`exploiter.py`)**: Refines candidate routes using a 2-opt algorithm to improve the path efficiency.
 
 ### Helper Agents:
-
-- `TaskManager`, `PerformanceMonitor`, `FeedbackLoop`, and `PheromoneRegulator` manage the simulation.
+- **TaskManager, PerformanceMonitor, FeedbackLoop, and PheromoneRegulator (`helper_agents.py`)**: Coordinate and manage the agent-based simulation, monitor performance, and adjust pheromone levels to optimize route selection.
 
 ### Directions Generation:
-
-- `generate_directions(graph, route)`: Converts the route (node IDs) into human-friendly directions with street names and distances.
+- **`generate_directions(graph, route)` (`directions.py`)**: Converts a sequence of node IDs representing a route into human-friendly, turn-by-turn directions with street names and distances.
 
 ### LLM Integration:
+- **HuggingFaceLLMInterface (`llm_interface.py`)**: Interfaces with the Hugging Face API to parse user queries and format the final output.
+- **LLMInterface (`llm_interface.py`)**: Orchestrates LLM parsing and integrates with the ACO system to produce the final human-readable route directions.
+- **`simulate_ACO()` (`llm_interface.py`)**: Simulates the Ant Colony Optimization process, coordinating agent behavior and route evaluation.
 
-- **`HuggingFaceLLMInterface`**: Interfaces with the Hugging Face API for both query parsing and final output formatting.
-- **`LLMInterface`**: Combines the components to process the query and generate the final directions.
+### Module Initialization:
+- **`__init__.py` (in `aco_agents/`, `utils/`, and `llm/` directories)**: Initializes the respective modules to allow imports across the system.
 
 ### Main Script:
+- **Main Entry Point (`main.py`)**: Handles user input, invokes geocoding and route computation, manages ACO agents, and generates human-friendly directions.
 
-- `main()`: The entry point for the application.
+### Requirements:
+- **Dependencies (`requirements.txt`)**: Lists the required Python libraries and packages to run the application.
+
+### Documentation:
+- **Project Guide (`README.md`)**: Provides setup instructions, code structure explanations, and project details.
+
 
 ---
 
@@ -144,4 +149,3 @@ The system will process your query, compute the route using ACO, generate human-
 This project is open source and available under the MIT License.
 
 Feel free to modify and extend the code or documentation as needed.
-
