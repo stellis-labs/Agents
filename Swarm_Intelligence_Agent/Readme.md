@@ -36,24 +36,23 @@ Below is the visual representation of the **Swarm Intelligence System**:
 
 ![System Flow](./system-flow-diagram.png)
 
-📌 **Make sure to place the diagram image (`system-flow-diagram.png`) in the same directory as this README.**
 
 ---
 
 ## 🛠 **Technology Stack**
 | **Component**               | **Technology**                                  |
 |-----------------------------|-------------------------------------------------|
-| **User Interface (UI)**     | React.js / Angular                             |
-| **API Gateway**             | FastAPI / Flask / Express                      |
-| **Swarm Intelligence Agent**| Python / Node.js                               |
-| **Coordinator**             | Python                                         |
-| **Explorer**                | Pathfinding algorithms, Random search         |
-| **Evaluator**               | Scikit-learn, custom evaluation functions      |
-| **Synthesizer**             | Custom optimization algorithms                |
-| **Monitor**                 | Python (for tracking performance)             |
-| **Learner**                 | Reinforcement Learning (Q-learning, etc.)     |
-| **Redis**                   | In-memory caching for solutions and sessions  |
-| **Kafka**                   | Message broker for asynchronous communication |
+| **User Interface (UI)**     | React.js                                        |
+| **API Gateway**             | Flask                                           |                    
+| **Swarm Intelligence Agent**| Python                                          |
+| **Coordinator**             | Python                                          |
+| **Explorer**                | Pathfinding algorithms, Random search           |
+| **Evaluator**               | Scikit-learn, custom evaluation functions       |
+| **Synthesizer**             | Custom optimization algorithms                  |
+| **Monitor**                 | Python (for tracking performance)               |
+| **Learner**                 | Reinforcement Learning (Q-learning, etc.)       |
+| **Redis**                   | In-memory caching for solutions and sessions    |
+| **Kafka**                   | Message broker for asynchronous communication   |
 
 ---
 
