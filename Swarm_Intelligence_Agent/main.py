@@ -1,7 +1,7 @@
 from google import genai
 
 # Gemini API Key (Replace with your actual key)
-GEMINI_API_KEY = "AIzaSyC_ruWIn55pe3F8hPO4dEecsTEQ3JVMHL4"
+GEMINI_API_KEY = "Your_API_Key"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 
