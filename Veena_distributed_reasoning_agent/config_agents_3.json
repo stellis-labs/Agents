@@ -1,0 +1,22 @@
+[
+  {
+    "name": "NetworkTrafficAnalyzer",
+    "task_type": "Analyze network traffic patterns and identify unusual activity",
+    "task_prompt": "Review security logs to identify periods of unusual network traffic, including failed login attempts and encrypted data transfers. Create a timeline of events to visualize the patterns and anomalies observed."
+  },
+  {
+    "name": "GeolocationInvestigator",
+    "task_type": "Investigate geolocation data for potential insider threats",
+    "task_prompt": "Analyze security logs to identify failed login attempts from multiple global locations, including IP addresses and geographical coordinates. Identify any patterns or correlations that may indicate an insider threat."
+  },
+  {
+    "name": "ThreatProfileBuilder",
+    "task_type": "Construct a threat profile to determine attack vectors",
+    "task_prompt": "Based on the analysis of network traffic patterns and geolocation data, construct a comprehensive threat profile outlining potential attack vectors (APT, insider, or false positive). Consider factors such as motivation, resources, and tactics used."
+  },
+  {
+    "name": "MitigationStrategist",
+    "task_type": "Develop effective threat mitigation strategies",
+    "task_prompt": "Using the threat profile constructed earlier, develop targeted threat mitigation strategies to minimize business disruption. This may include implementing additional security measures, modifying network configurations, or establishing incident response protocols."
+  }
+]
