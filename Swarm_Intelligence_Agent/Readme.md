@@ -31,6 +31,11 @@ The system is composed of several key components:
 
 ---
 
+### **High-Level System Design**
+
+![image](https://github.com/user-attachments/assets/1bba5b3d-c5bf-4e50-9505-bcdad53e7756)
+
+
 ### 📌 **Flow Diagram**
 Below is the visual representation of the **Swarm Intelligence System**:
 
