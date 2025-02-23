@@ -42,8 +42,8 @@ Below is the visual representation of the **Swarm Intelligence System**:
 ## 🛠 **Technology Stack**
 | **Component**               | **Technology**                                  |
 |-----------------------------|-------------------------------------------------|
-| **User Interface (UI)**     | React.js                                        |
-| **API Gateway**             | Flask                                           |                    
+| **User Interface (UI)**     | Streamlit                                       |
+| **API Gateway**             | FastAPI                                         |                    
 | **Swarm Intelligence Agent**| Python                                          |
 | **Coordinator**             | Python                                          |
 | **Explorer**                | Pathfinding algorithms, Random search           |
@@ -52,7 +52,6 @@ Below is the visual representation of the **Swarm Intelligence System**:
 | **Monitor**                 | Python (for tracking performance)               |
 | **Learner**                 | Reinforcement Learning (Q-learning, etc.)       |
 | **Redis**                   | In-memory caching for solutions and sessions    |
-| **Kafka**                   | Message broker for asynchronous communication   |
 
 ---
 
@@ -67,8 +66,7 @@ Below is the visual representation of the **Swarm Intelligence System**:
 5. **Monitor** tracks agent performance and provides **real-time feedback**.
 6. **Learner** uses this feedback to optimize agent strategies over time.
 7. **Redis** caches solutions to prevent redundant computations.
-8. **Kafka** enables asynchronous message passing between agents.
-9. **Final Optimized Solution** is sent back to the **User Interface**.
+8. **Final Optimized Solution** is sent back to the **User Interface**.
 
 ---
 

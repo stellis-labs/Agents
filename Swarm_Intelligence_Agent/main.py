@@ -1,9 +1,12 @@
 from google import genai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Gemini API Key (Replace with your actual key)
-GEMINI_API_KEY = "Your_API_Key"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=GEMINI_API_KEY)
-
 
 class Explorer:
     """
@@ -150,8 +153,6 @@ class SwarmIntelligenceAgent:
         formatted_solutions = "\n".join(f"{i+1}. {sol[0]}" for i, sol in enumerate(solutions_with_scores))
 
         return f"Recommended Solutions:\n{formatted_solutions}\n\nFinal Optimized Choice:\n{final_solution}"
-
-
 
 
 # Example Usage
