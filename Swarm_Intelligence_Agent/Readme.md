@@ -8,7 +8,7 @@ This project implements a **Swarm Intelligence Agent** to dynamically **fetch, e
 - **Real-World Data Integration** → Fetches live cost, time, and risk metrics.
 - **Reinforcement Learning (RL) Adaptation** → ML-based weight optimization.
 - **Continuous Feedback Loop** → Adaptive learning from real-time feedback.
-- **Scalability** → Uses **Redis (caching)** and **Kafka (async communication)**.
+- **Scalability** → Uses **Redis (caching)**.
 
 ---
 
@@ -27,7 +27,6 @@ The system is composed of several key components:
 6. **Monitor** → Tracks agent performance and sends real-time feedback.
 7. **Learner** → Uses feedback to improve the strategies of worker agents.
 8. **Redis (Caching Layer)** → Stores intermediate results for fast lookups.
-9. **Kafka (Message Queue)** → Ensures async communication between agents.
 
 ---
 
