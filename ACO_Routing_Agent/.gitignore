@@ -1,0 +1,32 @@
+.venv
+/venv
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+*.so
+
+# C extensions
+*.egg-info/
+*.egg
+
+# Virtual environment directories
+venv/
+ENV/
+env/
+
+# Distribution / packaging
+build/
+dist/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Environment variables
+.env
+HF_Token_Accesskey.txt
+/cache
