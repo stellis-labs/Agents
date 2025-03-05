@@ -1,8 +1,15 @@
 import os
 import json
 import requests
+import re
 import osmnx as ox
 from config import GROQ_API_KEY
+
+def remove_think_blocks(text):
+    """
+    Removes any <think>...</think> content from the text.
+    """
+    return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
 
 class GroqLLMInterface:
     def __init__(self):
@@ -58,54 +65,80 @@ class GroqLLMInterface:
         """
         Extract the start and destination from the query using Groq.
         Expects output in valid JSON format exactly as shown:
-        {"start": "Boston Logan Airport", "destination": "Northeastern University"}
+        {"start": "", "destination": ""}
         """
         prompt = (
             "Extract the start location and destination from the following query. "
             "Return the result in valid JSON format exactly as shown below:\n"
-            '{"start": "Boston Logan Airport", "destination": "Northeastern University"}\n'
+            '{"start": "", "destination": ""}\n'
             f"Query: {query}\n"
             "Output:"
         )
         result = self.query(prompt)
-        print("LLM raw output length:", len(result))
-        print("LLM raw output:", result)  # Debug line
 
-        # Use a regular expression to capture the first JSON block
-        import re
+        # Remove <think> blocks right away so they're not printed in debug
+        result = remove_think_blocks(result)
+
+        print("LLM raw output length:", len(result))
+        print("LLM raw output:", result)  # Debug line without <think>
+
         match = re.search(r'({.*?})', result, re.DOTALL)
         if match:
             json_str = match.group(1)
             print("Extracted JSON substring:", json_str)
             try:
                 data = json.loads(json_str)
-                start = data.get("start")
-                dest = data.get("destination")
-                if start and dest:
-                    print("Successfully extracted start and destination.")
-                    return start, dest
+                start_llm = data.get("start")
+                dest_llm = data.get("destination")
+                if start_llm and dest_llm:
+                    print("LLM extracted:", start_llm, "to", dest_llm)
+                    # Validate they appear in the user query
+                    if self._locations_consistent_with_query(start_llm, dest_llm, query):
+                        print("LLM extraction is consistent with user query.")
+                        return start_llm, dest_llm
+                    else:
+                        print("LLM extraction is NOT consistent with user query. Falling back.")
                 else:
-                    print("Parsed JSON but missing keys: start or destination.")
+                    print("LLM JSON missing 'start' or 'destination'. Falling back.")
             except Exception as e:
-                print("JSON parsing failed for substring:", json_str)
-                print("Exception:", e)
+                print("JSON parsing failed:", e)
         else:
-            print("No JSON substring found in the LLM output.")
-        
-        # Fallback extraction if regex fails.
-        start = None
-        dest = None
-        for part in result.split(";"):
-            if "start:" in part.lower():
-                start = part.split(":")[1].strip()
-            elif "destination:" in part.lower():
-                dest = part.split(":")[1].strip()
-        if start and dest:
-            print("Fallback extraction succeeded:", start, dest)
-        else:
-            print("Fallback extraction failed.")
-        return start, dest
+            print("No JSON substring found in the LLM output. Falling back.")
 
+        # Fallback approach
+        print("Attempting fallback parse from user query...")
+        start_fb, dest_fb = self._fallback_parse(query)
+        if start_fb and dest_fb:
+            print("Fallback parse succeeded:", start_fb, dest_fb)
+            return start_fb, dest_fb
+        else:
+            print("Fallback parse failed.")
+            return None, None
+        
+    def _fallback_parse(self, query):
+        """
+        A naive fallback that looks for the words 'from' and 'to' in the user query.
+        Example: 'give me the shortest path from X to Y'
+        """
+        query_lower = query.lower()
+        start_val, dest_val = None, None
+        if "from" in query_lower and "to" in query_lower:
+            try:
+                after_from = query_lower.split("from")[1]
+                parts = after_from.split("to")
+                start_val = parts[0].strip().title()
+                dest_val = parts[1].strip().title()
+            except Exception as e:
+                print("Fallback parse error:", e)
+        return start_val, dest_val
+
+    def _locations_consistent_with_query(self, start_llm, dest_llm, user_query):
+        """
+        A simple check to see if the LLM's extracted start/destination 
+        at least appear in the user's query. Adjust as needed.
+        """
+        q_lower = user_query.lower()
+        return (start_llm.lower() in q_lower) and (dest_llm.lower() in q_lower)
 
 class LLMInterface:
     def __init__(self):
@@ -156,8 +189,10 @@ class LLMInterface:
         # Generate human-friendly directions using street names.
         directions = generate_directions(graph, best_route)
         # Use Groq to polish the output.
-        response = self.llm.format_route_response(
-            start_location, dest_location, best_route, best_cost, directions)
+        response = self.llm.format_route_response(start_location, dest_location, best_route, best_cost, directions)
+        
+        # Remove <think> blocks from the final LLM response
+        response = remove_think_blocks(response)
         return response
 
 # Import the ACO simulation function to avoid circular dependencies.
@@ -185,33 +220,65 @@ def simulate_ACO(graph, start_node, dest_node):
     for i, sol in enumerate(candidate_solutions):
         print(f"Candidate {i+1}: {sol}")
     
+    # ---------------------------
+    # Gather solutions that reached the destination
+    # and sort them by route length (fewest steps first).
+    # ---------------------------
+    reached_solutions = []
+    for i, sol in enumerate(candidate_solutions):
+        if sol is not None:
+            # (agent_index, route_list)
+            reached_solutions.append((i, sol))
+    
+    if not reached_solutions:
+        print("No solutions reached the destination.")
+        return None, float('inf')
+    
+    # Sort solutions by the number of steps in the route
+    reached_solutions.sort(key=lambda x: len(x[1]))
+    
+    # Pick only the best two (fewest steps)
+    top_solutions = reached_solutions[:2]
+    print("Evaluating only these top solutions (fewest steps):")
+    for idx, (agent_idx, route) in enumerate(top_solutions, start=1):
+        print(f"Top {idx} => Explorer {agent_idx+1}, steps={len(route)}: {route}")
+    
+    # Evaluate & refine only these top solutions
     refined_solutions = []
-    for i, (solution, trailblazer) in enumerate(zip(candidate_solutions, trailblazers)):
-        if solution is None:
-            print(f"Candidate {i+1} did not reach the destination.")
-            continue
-        quality, cost = trailblazer.evaluate_solution(solution)
-        print(f"Candidate {i+1} evaluated: quality={quality}, cost={cost}")
-        trailblazer.deposit_pheromones(solution, quality)
-        refined = exploiters[0].refine_solution(solution)
-        print(f"Candidate {i+1} refined solution: {refined}")
+    for agent_idx, route in top_solutions:
+        # Evaluate using the matching trailblazer
+        quality, cost = trailblazers[agent_idx].evaluate_solution(route)
+        print(f"Explorer {agent_idx+1} route cost={cost}, quality={quality}")
+        
+        # Deposit pheromones
+        trailblazers[agent_idx].deposit_pheromones(route, quality)
+        
+        # Refine solution using Exploiter 0 (or pick any exploiter)
+        refined = exploiters[0].refine_solution(route)
+        print(f"Refined solution (Explorer {agent_idx+1}): {refined}")
+        
         if refined is None:
-            print(f"Candidate {i+1} could not be refined further.")
+            print(f"Explorer {agent_idx+1} route could not be refined.")
             continue
-        refined_cost = Exploiter(graph, pheromone_matrix).route_cost(refined)
-        print(f"Candidate {i+1} refined cost: {refined_cost}")
+        
+        refined_cost = exploiters[0].route_cost(refined)
+        print(f"Refined cost (Explorer {agent_idx+1}): {refined_cost}")
         performance_monitor.record(refined, refined_cost)
         refined_solutions.append((refined, refined_cost))
     
-    print("Refined solutions:", refined_solutions)
+    # If no solutions remain after refining
+    if not refined_solutions:
+        print("No refined solutions found among top routes.")
+        return None, float('inf')
+    
+    # Perform feedback & pheromone evaporation
     avg_cost = performance_monitor.evaluate()
-    print("Average cost:", avg_cost)
+    print("Average cost among top routes:", avg_cost)
     feedback_loop.adjust_parameters(avg_cost)
     pheromone_regulator.evaporate()
     
-    if not refined_solutions:
-        print("No refined solutions found.")
-        return None, float('inf')
+    # Pick the best among the refined solutions
     best_route, best_cost = min(refined_solutions, key=lambda x: x[1])
     print("Best route found with cost:", best_cost)
     return best_route, best_cost
+
