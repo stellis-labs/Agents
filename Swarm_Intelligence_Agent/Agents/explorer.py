@@ -1,49 +1,55 @@
-from google import genai
 import os
 from dotenv import load_dotenv
+from groq import Client
+import groq
 
 load_dotenv()
 
-# Gemini API Key (Replace with your actual key)
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=GEMINI_API_KEY)
+# GROQ API Key (Replace with your actual key)
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+client = groq.Client(api_key=GROQ_API_KEY)
 
 class Explorer:
     """
     Uses the Gemini API to generate potential solutions.
     """
 
-    def __init__(self, problem_description, constraints, max_solutions=5):
+    def __init__(self, problem_description, max_solutions=5):
         self.problem_description = problem_description
-        self.constraints = constraints
         self.max_solutions = max_solutions
 
     def generate_solutions(self):
+
+        prompt = """
+        You are an Explorer Agent, an AI designed to provide creative and practical solutions to problems.
+        Your task is to take the following problem statement and generate exactly 5 distinct possible solutions.
+        Each solution should be concise (2-3 sentences), actionable, and relevant to the problem.
+        Avoid overly vague or repetitive ideas.
+        Focus on diversity of approaches and clarity.
+
+        Return your response as a JSON list of 5 solutions in the following format, with no additional text, comments, or formatting outside the list:
+        [
+            "Description of solution 1",
+            "Description of solution 2",
+            "Description of solution 3",
+            "Description of solution 4",
+            "Description of solution 5"
+        ]
         """
-        Generates potential solutions using the Gemini API.
-        """
-        prompt = f"I need solutions for the following problem: {self.problem_description}\n"
-        prompt += f"Here are the constraints: {self.constraints}\n"
-        prompt += "Generate a list of potential solutions, each as a single, concise sentence or phrase. Give me at most {self.max_solutions} solutions."
 
         try:
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents= prompt
+            response = client.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[
+                    {"role": "system", "content": prompt},
+                    {"role": "user", "content": self.problem_description}
+                ]
             )
-            solutions_text = response.text
-
-            # Basic parsing of the Gemini response (assumes solutions are on separate lines or comma-separated)
-            solutions = [s.strip() for s in solutions_text.split("\n") if s.strip()]
-            if not solutions:
-                solutions = [s.strip() for s in solutions_text.split(",") if s.strip()] #Try comma splitting if newlines don't work
-
-            if not solutions:
-                print("Warning: No solutions parsed from Gemini's response.")
-                return [] #Return empty if there are no responses
-
+            # print("response", response.choices[0].message.content)
+            solutions_text = response.choices[0].message.content
+            solutions = solutions_text.split('",')
             return solutions
+
         except Exception as e:
             print(f"Error generating solutions with Gemini API: {e}")
-            return []  # Return an empty list in case of an error.
-
+            return {}
