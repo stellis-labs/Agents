@@ -3,35 +3,41 @@ sys.path.append("..")
 from .explorer import Explorer
 from .evaluator import Evaluator
 from .synthesizer import Synthesizer
+from .coordinator import Coordinator
+from .learner import Learner
+from .monitor import Monitor
+import datetime
 
 class SwarmIntelligenceAgent:
-    def __init__(self, problem_description, constraints):
+    def __init__(self, problem_description):
         self.problem_description = problem_description
-        self.constraints = constraints
-        self.explorer = Explorer(problem_description, constraints)
-        self.evaluator = Evaluator(problem_description, constraints)
+        self.explorer = Explorer(problem_description)
+        self.evaluator = Evaluator(problem_description)
         self.synthesizer = Synthesizer()
+        self.coordinator = Coordinator()
+        self.learner = Learner()
+        self.monitor = Monitor()
 
     def solve(self):
         """
         Executes the swarm intelligence process.
         """
-        # 1. Exploration
         solutions = self.explorer.generate_solutions()
-
         if not solutions:
             return "No viable solutions found during exploration."
 
-        # 2. Evaluation
         solutions_with_scores = []
+        evaluation_time = 0
         for solution in solutions:
-            score = self.evaluator.evaluate_solution(solution)
+            score = self.evaluator.get_evaluation_metrics_and_constraints(solution)
             solutions_with_scores.append((solution, score))
+            evaluation_time += 1
 
-        # 3. Synthesis
-        final_solution = self.synthesizer.synthesize(solutions_with_scores)
+        self.monitor.check_for_bottlenecks(len(solutions), evaluation_time)
+        feedback = self.monitor.get_feedback()
+        if feedback:
+            print(f"Monitor feedback: {feedback}")
 
-        # **Improved Output Formatting**
-        formatted_solutions = "\n".join(f"{i+1}. {sol[0]}" for i, sol in enumerate(solutions_with_scores))
-
-        return f"Recommended Solutions:\n{formatted_solutions}\n\nFinal Optimized Choice:\n{final_solution}"
+        current_time = datetime.datetime.now()
+        final_solution = self.synthesizer.get_reason(solutions_with_scores, self.problem_description, current_time)
+        return final_solution

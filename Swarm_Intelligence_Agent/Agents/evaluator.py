@@ -1,55 +1,44 @@
-from google import genai
 import os
 from dotenv import load_dotenv
+from groq import Client
+import groq
 
 load_dotenv()
 
-# Gemini API Key (Replace with your actual key)
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=GEMINI_API_KEY)
+# GROQ API Key (Replace with your actual key)
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+client = groq.Client(api_key=GROQ_API_KEY)
 
 class Evaluator:
-    """
-    Evaluates the quality of solutions based on metrics determined by Gemini.
-    """
+    def __init__(self, problem_description):
+        self.problem_description = problem_description
 
-    def __init__(self, problem_description, constraints):
-       self.problem_description = problem_description
-       self.constraints = constraints
+    def get_evaluation_metrics_and_constraints(self, solution):
+        system_prompt = """
+        You are an Evaluator Agent, an AI designed to assess solutions to a problem based on feasibility, cost-effectiveness, impact, and scalability.
+        Your task is to evaluate the following problem statement and the single solution provided below.
+        Score the solution out of 10 for each factor (feasibility, cost-effectiveness, impact, scalability), then calculate the total score out of 40.
+        Do not include individual scores or explanations, only the final total score.
 
-    def get_evaluation_metrics(self, solution):
+        Provide your response as a single integer representing the total score out of 40, with no additional text or formatting:
+        28
         """
-        Asks Gemini to suggest evaluation metrics for the solution.
-        """
 
-        prompt = f"Based on the problem description: {self.problem_description}, constraints: {self.constraints}, and the following potential solution: '{solution}', what are the most important evaluation metrics to consider? Provide the metrics as a comma-separated list of key phrases."
+        user_prompt = f"""
+        Problem_description: {self.problem_description}
+        Solutions: {solution}
+        """
 
         try:
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents= prompt
+            response = client.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ]
             )
-            metrics_text = response.text.strip()
-            metrics = [m.strip() for m in metrics_text.split(",")]
-            return metrics
+            score = response.choices[0].message.content
+            return score
         except Exception as e:
-            print(f"Error getting evaluation metrics from Gemini API: {e}")
+            print(f"Error getting evaluation metrics and constraints from Gemini API: {e}")
             return []
-
-    def evaluate_solution(self, solution):
-        """
-        Evaluates a single solution and returns a score (higher is better).
-        """
-
-        metrics = self.get_evaluation_metrics(solution) #Get metrics specific for THIS solution
-
-        if not metrics:
-            print(f"Warning: No metrics found for solution: '{solution}'")
-            return 0
-
-        score = 0
-        for metric in metrics:
-            # VERY simple example: award points for keywords matching the metrics
-            if metric.lower() in solution.lower():
-                score += 1  # Simple keyword matching
-        return score
