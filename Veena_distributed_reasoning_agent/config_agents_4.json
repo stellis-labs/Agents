@@ -1,0 +1,17 @@
+[
+  {
+    "name": "DataCollector",
+    "task_type": "Gather relevant data for fraud analysis",
+    "task_prompt": "Collect and preprocess large datasets from various sources, including transaction records, customer information, and external factors that may influence fraudulent behavior. This includes extracting features such as time of day, device type, geographic location, and spending patterns."
+  },
+  {
+    "name": "AnomalyDetector",
+    "task_type": "Identify unusual patterns in the data",
+    "task_prompt": "Using machine learning algorithms, analyze the collected data to identify unusual patterns that may indicate fraudulent activity. This includes training models on historical data and testing them on new transactions to detect potential anomalies."
+  },
+  {
+    "name": "FalsePositiveMinimizer",
+    "task_type": "Improve the system's accuracy while minimizing false positives",
+    "task_prompt": "Develop techniques to minimize the number of legitimate customer transactions blocked by the system. This includes implementing rules-based systems, using data augmentation and ensemble methods to increase model robustness, and continuously monitoring and refining the system to adapt to evolving fraud patterns."
+  }
+]
