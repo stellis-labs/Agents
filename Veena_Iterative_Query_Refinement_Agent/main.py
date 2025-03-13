@@ -1,5 +1,6 @@
 import json
 import requests
+import time
 from datetime import datetime
 from collections import defaultdict
 from rich.console import Console
@@ -81,6 +82,7 @@ class IterativeQueryAgent:
             return ""
 
     def refine_query(self, initial_query: str) -> str:
+        start_time = time.time()
         console.print(Panel(f"[bold cyan]Initial Query:[/bold cyan] {initial_query}"))
 
         # Step 1: Generate validated variations
@@ -140,7 +142,7 @@ class IterativeQueryAgent:
             console.print(f"[bold]{idx}.[/bold] {result}")
 
         # Step 4: Final synthesis
-        console.print(Panel("[bold magenta]Step 4: Final Answer[/bold magenta]"))
+        console.print(Panel("[bold magenta]Step 4: Refined Answer[/bold magenta]"))
         synthesis_prompt = f"""Combine these insights about {initial_query}:
         {chr(10).join(extracted)}
         
@@ -150,7 +152,30 @@ class IterativeQueryAgent:
         - Conclusion summary"""
         
         final = self._query_ollama(synthesis_prompt)
-        console.print(Panel(final, title="Final Answer", style="green"))
+        refined_time = time.time() - start_time
+        console.print(Panel(final, title="[bold green]Final Refined Answer[/bold green]"))
+
+        # Step 5: Direct Answer
+        direct_start = time.time()
+        direct_answer = self._query_ollama(initial_query)
+        direct_time = time.time() - direct_start
+        console.print(Panel("[bold orange3]Step 5: Direct Answer[/bold orange3]"))
+        console.print(Panel(direct_answer, title="[bold yellow]Direct Answer[/bold yellow]"))
+
+        # Step 6: Benchmarking Analysis
+        console.print(Panel("[bold blue]Step 6: Benchmarking Analysis[/bold blue]"))
+        
+        comparison_table = Table(title="Performance Comparison", show_header=True, header_style="bold magenta")
+        comparison_table.add_column("Metric", style="cyan")
+        comparison_table.add_column("Refined Answer")
+        comparison_table.add_column("Direct Answer")
+        
+        comparison_table.add_row("Processing Time", f"{refined_time:.1f}s", f"{direct_time:.1f}s")
+        comparison_table.add_row("Word Count", str(len(final.split())), str(len(direct_answer.split())))
+        comparison_table.add_row("Sources Used", str(len({insight['query'] for insight in insights})), "0")
+        comparison_table.add_row("Variations Processed", str(len(variations)), "N/A")
+        
+        console.print(comparison_table)
         
         self._save_memory()
         return final
