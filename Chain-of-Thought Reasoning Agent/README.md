@@ -28,19 +28,32 @@ The agent supports both **local LLM models** (using Ollama) and **cloud-based mo
 
 ## 📂 Project Structure  
 CoT_Reasoning_Agent/ 
-├── main.py # Entry point for user input 
+├── main.py # Entry point for user input
+
 ├── reasoning_agent.py # Main reasoning agent 
+
 ├── agents/ # Handles CoT tree logic 
+
 │ ├── reasoning_tree.py # Expands CoT tree recursively 
+
 │ ├── sub_agent.py # Sub-agent logic for each step 
+
 ├── llm_interfaces/ # LLM integration 
+
 │ ├── base_llm.py # Base LLM interface 
+
 │ ├── ollama_llm.py # Ollama LLM client 
+
 │ ├── groq_llm.py # Groq LLM client 
+
 │ ├── llm_factory.py # Dynamically selects LLM 
+
 ├── utils/ # Utility functions 
+
 │ ├── response_cleaner.py # Cleans raw LLM output 
+
 │ ├── display_manager.py # Handles console output formatting 
+
 └── README.md # Project documentation
 
 ---
@@ -89,14 +102,14 @@ python main.py
 ```
 
 ### 🧠 How It Works
-The user enters a problem statement in the console.
-The agent identifies the problem domain and breaks it down into key components.
-Each key component is passed to sub-agents to generate intermediate questions.
-Sub-agents create hypotheses based on each question.
-Hypotheses are evaluated, leading to solutions.
-Historical data is used to evaluate solutions.
-A final recommendation is generated based on all outcomes.
-💡 Example Output
+The user enters a problem statement in the console.  
+The agent identifies the problem domain and breaks it down into key components.  
+Each key component is passed to sub-agents to generate intermediate questions.  
+Sub-agents create hypotheses based on each question.  
+Hypotheses are evaluated, leading to solutions.  
+Historical data is used to evaluate solutions.  
+A final recommendation is generated based on all outcomes.  
+💡 Example Output  
 ```
 Problem Statement: How can we optimize the delivery routes for a fleet of 50 vehicles in a congested city?
 
@@ -134,32 +147,32 @@ Problem Statement: How can we optimize the delivery routes for a fleet of 50 veh
 ╰─────────────────────────────────────────────────────────────────────────╯
 ```
 ## 🛠️ Tech Stack
-Python – Core language
-Rich – For console formatting
-Ollama – Local LLM execution
-Groq – Cloud-based LLM execution
-requests – For API communication
+Python – Core language  
+Rich – For console formatting  
+Ollama – Local LLM execution  
+Groq – Cloud-based LLM execution  
+requests – For API communication  
 
 ## ✅ Key Design Decisions
-Dynamic LLM Support – Supports both local and cloud-based models.
-Tree-Structured Reasoning – Hierarchical approach using recursive sub-agents.
-Efficient Resource Handling – Cached responses using @lru_cache.
-Modular Design – Clean separation of concerns for easy extension.
+Dynamic LLM Support – Supports both local and cloud-based models.  
+Tree-Structured Reasoning – Hierarchical approach using recursive sub-agents.  
+Efficient Resource Handling – Cached responses using @lru_cache.  
+Modular Design – Clean separation of concerns for easy extension.  
 
 ## 🌟 Best Practices Followed
-✔️ Clean and modular code structure
-✔️ Minimized redundant LLM calls using caching
-✔️ Secure handling of API keys using environment variables
-✔️ Graceful handling of user input and invalid responses
+✔️ Clean and modular code structure  
+✔️ Minimized redundant LLM calls using caching  
+✔️ Secure handling of API keys using environment variables  
+✔️ Graceful handling of user input and invalid responses  
 
 ## 🚀 Future Improvements
-✅ Improve handling of real-time data sources
-✅ Add support for additional LLM providers (like OpenAI)
-✅ Improve multi-agent communication strategies
-✅ Test with more diverse problem domains
+✅ Improve handling of real-time data sources  
+✅ Add support for additional LLM providers (like OpenAI)  
+✅ Improve multi-agent communication strategies  
+✅ Test with more diverse problem domains  
 
 ## 👥 Contributors
-Animesh Giri – Lead Developer
+Animesh Giri – Lead Developer  
 
 ## 📝 License
-This project is licensed under the MIT License.
+This project is licensed under the MIT License.  
