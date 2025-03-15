@@ -1,0 +1,8 @@
+# Base dependencies
+rich==13.7.0
+tenacity==8.2.3
+requests==2.31.0
+
+# Optional development dependencies
+black==23.12.1
+flake8==6.1.0
