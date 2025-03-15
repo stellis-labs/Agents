@@ -1,10 +1,11 @@
 import streamlit as st
-from google import genai
+from groq import Client
+import groq
 import os
 import sys
 from pathlib import Path
 
-root_dir = Path(__file__).resolve().parent.parent  # Correct for your structure
+root_dir = Path(__file__).resolve().parent.parent 
 sys.path.append(str(root_dir))
 
 from dotenv import load_dotenv
@@ -12,13 +13,9 @@ from Agents.swarm import SwarmIntelligenceAgent
 
 load_dotenv()
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-client = genai.Client(api_key = GEMINI_API_KEY)
-
 # Set a default model
-if "genai_model" not in st.session_state:
-    st.session_state["genai_model"] = "gemini-2.0-flash"
+if "groq_model" not in st.session_state:
+    st.session_state["groq_model"] = "llama-3.1-8b-instant"
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -30,6 +27,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # problem_description = "Optimize better way to travel from Boston to Newyork City"
+# problem_description = "How can a small business increase its online sales with a limited budget?"
 # constraints = "Must be cost-effective and relatively quick."
 
 # Accept user input
@@ -39,8 +37,35 @@ if prompt := st.chat_input("Start Typing...."):
     # Display user message in chat message container
     st.chat_message("user").write(prompt)
 
-    agent = SwarmIntelligenceAgent(prompt, "Must be cost-effective and relatively quick.")
+    problem_description = "How can a small business increase its online sales with a limited budget?"
+    agent = SwarmIntelligenceAgent(prompt)
     final_solution = agent.solve()
+
+    # Extracting and structuring output
+    sections = final_solution.split("\n\n")
+
+    # Extract recommended solutions
+    recommended_solutions = sections[0].replace("Recommended Solutions:\n", "").strip().split("\n")
+
+    # Extract final optimized choice
+    final_choice = sections[-1].replace("Final Optimized Choice:\n", "").strip()
+
+    print("\n" + "=" * 80)
+    print(f"🌱 **PROBLEM STATEMENT:** {problem_description}")
+    print("=" * 80)
+    print("\n🔍 **RECOMMENDED SOLUTIONS:**\n")
+
+    # Clean up numbered solutions
+    for line in recommended_solutions:
+        if line.strip() and not line.startswith("Here are"):
+            print(f"   ✅ {line.strip()}")
+
+    print("\n" + "=" * 80)
+    print("🏆 **FINAL OPTIMIZED CHOICE:**")
+    print("=" * 80)
+    print(f"💡 {final_choice}")
+    print("=" * 80 + "\n")
+
 
     st.chat_message("assistant").write(final_solution)
 
