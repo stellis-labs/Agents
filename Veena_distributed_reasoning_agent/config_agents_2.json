@@ -1,0 +1,22 @@
+[
+  {
+    "name": "SupplierInventoryAnalyzer",
+    "task_type": "Analyze current inventory levels of critical components across suppliers.",
+    "task_prompt": "Using existing data sources, collect and analyze current inventory levels of critical components from all suppliers. Identify top-tier suppliers with sufficient stock, as well as those struggling to meet demand. This will help prioritize supplier relationships and inform inventory management decisions."
+  },
+  {
+    "name": "LeadTimeAnalyzer",
+    "task_type": "Analyze lead times for critical component deliveries.",
+    "task_prompt": "Using historical data and industry benchmarks, analyze the average lead times for delivering critical components from suppliers. Identify trends, outliers, and potential bottlenecks in the supply chain. This will help inform strategies to reduce lead times and mitigate delays."
+  },
+  {
+    "name": "RiskAssessor",
+    "task_type": "Assess risks associated with supplier relationships.",
+    "task_prompt": "Using existing data and market research, assess the risks associated with each supplier relationship. Consider factors such as financial stability, production capacity, and geographic location. Identify potential risks and develop strategies to mitigate them."
+  },
+  {
+    "name": "SupplyChainOptimizer",
+    "task_type": "Develop a plan to optimize supply chain operations.",
+    "task_prompt": "Using insights from previous tasks, develop a comprehensive plan to optimize supply chain operations. This may involve negotiating with suppliers, implementing inventory management strategies, and streamlining logistics processes. Identify key performance indicators (KPIs) to measure the success of these efforts."
+  }
+]
