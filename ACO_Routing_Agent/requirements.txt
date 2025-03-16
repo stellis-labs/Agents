@@ -1,5 +1,0 @@
-osmnx>=1.1.2
-geopy>=2.2.0
-networkx>=2.6
-requests>=2.25.1
-dotenv

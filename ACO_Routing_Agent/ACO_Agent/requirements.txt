@@ -1,0 +1,3 @@
+python-dotenv
+json5
+groq
