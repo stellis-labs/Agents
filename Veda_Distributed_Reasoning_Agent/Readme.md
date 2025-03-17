@@ -1,7 +1,9 @@
+**README.md**
+
 # 🤖 Distributed Reasoning Agent
 
 ## Overview
-The **Distributed Reasoning Agent** is an AI-driven system designed to decompose complex problems into structured sub-tasks, assign them to intelligent sub-agents, and synthesize results into a comprehensive solution. By leveraging **LLMs (Groq API) with LangChain**, this system efficiently automates problem-solving workflows, making it an ideal tool for research, automation, and decision-making processes.
+The **Distributed Reasoning Agent** is an AI-driven system designed to decompose complex problems into structured sub-tasks, assign them to intelligent sub-agents, and synthesize results into a comprehensive solution. By leveraging **LLMs (Groq API & Gemini API) with LangChain**, this system efficiently automates problem-solving workflows, making it an ideal tool for research, automation, and decision-making processes.
 
 ## 🚀 Key Features
 - **Automated Problem Decomposition**: Breaks down a user-input problem into sub-tasks.
@@ -16,6 +18,7 @@ The **Distributed Reasoning Agent** is an AI-driven system designed to decompose
 Distributed-Reasoning-Agent/
 │── agent.py                   # Main class for orchestrating task decomposition and execution
 │── main.py                    # Entry point for user interaction
+│── output.json                # Sub-agent logs saved in here
 │── .env                        # Environment variables (API keys)
 │── requirements.txt            # Dependencies for running the project
 │── README.md                   # Project overview and usage guide
@@ -26,9 +29,10 @@ Distributed-Reasoning-Agent/
    ```sh
    pip install -r requirements.txt
    ```
-2. Create a `.env` file and add your **Groq API Key**:
+2. Update `.env` file and add your ** API Key**:
    ```sh
    GROQ_API_KEY=your_api_key_here
+   GEMINI_API_KEY=your_api_key_here
    ```
 3. Run the agent:
    ```sh
@@ -41,7 +45,7 @@ Distributed-Reasoning-Agent/
 # System Design:
 
 ## **Architectural Overview**
-The system follows a modular **multi-agent reasoning framework**, where an AI-powered main agent orchestrates the decomposition, delegation, execution, and synthesis of tasks using **LLMs (Groq API) with LangChain**.
+The system follows a modular **multi-agent reasoning framework**, where an AI-powered main agent orchestrates the decomposition, delegation, execution, and synthesis of tasks using **LLMs (Groq API & Gemini API) with LangChain**.
 
 ## **Core Components**
 
@@ -69,13 +73,13 @@ The system follows a modular **multi-agent reasoning framework**, where an AI-po
 ## 🛠️ **Technology Stack**
 - **Python** – Primary programming language
 - **LangChain** – LLM integration and orchestration
-- **Groq API** – Advanced AI model execution
+- **Groq API & Gemini API** – Advanced AI model execution
 - **Rich** – Enhanced console-based visualization
 - **Dotenv** – Secure environment variable management
 
 ## **Workflow Diagram**
 ```
-User Input → Problem Decomposition → Sub-Agent Creation → Task Execution → Result Synthesis → Final Solution
+User Input → Problem Decomposition → Sub-Agent Creation → Task Execution → Result Synthesis → Output saved in JSON → Final Solution
 ```
 
 ## 🤝 Contributing
