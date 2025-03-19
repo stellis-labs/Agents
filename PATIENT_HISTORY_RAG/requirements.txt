@@ -1,0 +1,6 @@
+pandas
+sentence-transformers
+chromadb
+rich
+requests
+python-dotenv

@@ -1,0 +1,5 @@
+langchain
+langchain_groq
+google-generativeai
+python-dotenv
+rich

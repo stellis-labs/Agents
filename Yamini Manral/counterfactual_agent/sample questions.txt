@@ -1,0 +1,34 @@
+Sample questions for the agent:
+
+What if we increase the marketing budget by 20% for our new product launch?
+What if we expand our advertising campaign to include social media influencers?
+What if we cut the marketing budget by 15% and reallocate it to product development?
+What if we introduce a new loyalty program for existing customers to increase repeat purchases?
+What if we adjust our product pricing by 10% to stay competitive in the market?
+What if we expand our product offerings to cater to a new demographic?
+What if we reduce our marketing spend on traditional channels (TV, print) and invest more in digital marketing?
+What if we launch a new seasonal product during the holiday season to boost sales?
+What if we change our project timeline by increasing the duration of the software development phase?
+What if we outsource a portion of our project to reduce costs, but increase dependency on external vendors?
+What if we use an agile development model instead of a waterfall model for our software project?
+What if we decide to use a new, untested technology in our project, and how would that affect the timeline?
+What if we increase our team's size to handle the project faster but risk reduced coordination?
+What if we shift our project from a traditional office environment to remote work during development?
+What if we encounter a delay in receiving critical materials for our construction project?
+What if we decide to implement stricter quality control measures during the project, but it causes delays?
+What if I increase my monthly retirement savings by 5%?
+What if I decide to invest in high-risk, high-reward stocks instead of bonds for my portfolio?
+What if I reduce my credit card debt by 20% and reallocate the funds to long-term investments?
+What if I delay my home purchase by two years to save more for a down payment?
+What if I invest in index funds for 10 years instead of actively managed funds?
+What if I use a portion of my savings to start a side business?
+What if I start contributing to a health savings account (HSA) to reduce my future healthcare expenses?
+What if I choose to invest in real estate rather than the stock market for my long-term wealth growth?
+What if the government increases the corporate tax rate by 5%?
+What if a country implements a universal basic income policy for all its citizens?
+What if the minimum wage is increased by 15% across the country?
+What if the government imposes a carbon tax to reduce carbon emissions?
+What if the government subsidizes renewable energy initiatives to reduce dependency on fossil fuels?
+What if we introduce a policy to reduce the workweek to 4 days instead of 5?
+What if a country implements stricter immigration policies to control the influx of workers?
+What if the government introduces free healthcare for all, funded by increased taxes?
