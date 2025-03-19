@@ -1,0 +1,44 @@
+{
+    "ollama": {
+      "model": "llama3.1:latest",
+      "host": "localhost",
+      "port": 11434
+    },
+    "max_workers": 4,
+    "input_layer": {
+      "analysis_depth": "moderate",
+      "include_domain_detection": true
+    },
+    "decomposition_layer": {
+      "max_high_level_subproblems": 5,
+      "max_detailed_tasks_per_subproblem": 4,
+      "min_decomposition_depth": 2
+    },
+    "processing_layer": {
+      "solver": {
+        "max_attempts": 2,
+        "confidence_threshold": 0.7
+      },
+      "evaluator": {
+        "criteria_weights": {
+          "completeness": 0.25,
+          "feasibility": 0.30,
+          "effectiveness": 0.30,
+          "alignment": 0.15
+        }
+      },
+      "optimizer": {
+        "optimization_threshold": 8.5,
+        "max_optimization_rounds": 1
+      }
+    },
+    "integration_layer": {
+      "solution_integrator": {
+        "prioritize_highest_evaluated": true
+      },
+      "quality_controller": {
+        "approval_threshold": 7.5,
+        "critical_criteria": ["completeness", "feasibility"]
+      }
+    }
+  }
